@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: "*/15 * * * *"
   workflow_dispatch:
+    inputs:
+      test_mail:
+        description: "Poslat zkušební e-mail"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -24,3 +29,4 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
           MAIL_TO: dusan@timity.app
+          TEST_MAIL: ${{ inputs.test_mail && '1' || '0' }}

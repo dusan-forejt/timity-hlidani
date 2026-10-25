@@ -75,6 +75,10 @@ def mail(predmet, text):
 
 def main():
     cas = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    if os.environ.get("TEST_MAIL") == "1":
+        mail("Timity: zkušební e-mail hlídání",
+             f"Toto je zkušební e-mail z hlídání služeb Timity ({cas}). Upozornění na výpadek budou chodit stejnou cestou.")
+        print("zkušební e-mail odeslán")
     otevr = otevrene()
     chyby = 0
 
