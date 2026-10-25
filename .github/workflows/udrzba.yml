@@ -1,0 +1,23 @@
+# GitHub vypne naplánované workflow ve veřejném repu po 60 dnech bez aktivity.
+# Tahle úloha jednou měsíčně zapíše datum, aby hlídání běželo dál.
+name: udržení hlídání
+
+on:
+  schedule:
+    - cron: "0 4 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  zapis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          date -u +%Y-%m-%d > posledni-udrzba.txt
+          git config user.name "timity-hlidani"
+          git config user.email "noreply@timity.app"
+          git add posledni-udrzba.txt
+          git commit -m "udržení: $(date -u +%Y-%m-%d)" && git push || true
